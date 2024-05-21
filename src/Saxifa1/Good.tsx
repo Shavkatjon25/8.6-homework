@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react"
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Gd=styled.div`
@@ -106,6 +107,7 @@ margin-bottom:26px;
 
 
 const Good:FC=()=> {
+    const navigat=useNavigate();
     const [dt4, setDt4]=useState<any>();
     const [albom, setAlbom]=useState<any>();
 
@@ -123,10 +125,8 @@ const Good:FC=()=> {
                 }
             }
         )
-        console.log(d);
-        
+             
         const dj=await d.json();
-        console.log(dj.categories.items);
         const newD =dj.categories.items.splice(0, 4);
         setDt4(newD)
 
@@ -147,7 +147,7 @@ const Good:FC=()=> {
     async function Dta() {
         try{
 
-            const d=await fetch('https://api.spotify.com/v1/albums?ids=382ObEPsp2rxGrnsizN5TX%2C1A2GTWGtFfWp7KSQTwWOyo%2C2noRn2Aes5aoNVsU6iWThc%2C1A2GTWGtFfWp7KSQTwWOyo',
+            const d=await fetch('https://api.spotify.com/v1/browse/featured-playlists',
             {
                 headers:{
                     'Authorization':`Bearer ${tken}`
@@ -157,8 +157,8 @@ const Good:FC=()=> {
         console.log(d);
         
         const dj=await d.json();
-        console.log(dj);
-        setAlbom(dj.albums);
+       
+        setAlbom(dj.playlists.items);
         
 
         }
@@ -198,80 +198,24 @@ const Good:FC=()=> {
                 })
             }
         </W>
-        <AlbomTuri>Your top mixes</AlbomTuri>
-        <H>
-            {
-                albom?.map((a:any)=>{
-                    return(
-                        <Hf>
-                        <img src={a.images[1].url} width={182} alt="" />
-                        <Hh3>{a.name}</Hh3>
-                        <Hp>{a.label}</Hp>
-                    </Hf>
-                    )
-                })
-            }
-        </H>
+
 
         <AlbomTuri>Made for you</AlbomTuri>
         <H>
             {
                 albom?.map((a:any)=>{
                     return(
-                        <Hf>
-                        <img src={a.images[1].url} width={182} alt="" />
+                        <Hf  onClick={()=>navigat(`/plays/${a.id}`)}>
+                        <img src={a.images[0].url} width={182} alt="" />
                         <Hh3>{a.name}</Hh3>
-                        <Hp>{a.label}</Hp>
+                        <Hp>{a.description}</Hp>
                     </Hf>
                     )
                 })
             }
         </H>
 
-        <AlbomTuri>Recently played</AlbomTuri>
-        <H>
-            {
-                albom?.map((a:any)=>{
-                    return(
-                        <Hf>
-                        <img src={a.images[1].url} width={182} alt="" />
-                        <Hh3>{a.name}</Hh3>
-                        <Hp>{a.label}</Hp>
-                    </Hf>
-                    )
-                })
-            }
-        </H>
 
-        <AlbomTuri>Jump back in</AlbomTuri>
-        <H>
-            {
-                albom?.map((a:any)=>{
-                    return(
-                        <Hf>
-                        <img src={a.images[1].url} width={182} alt="" />
-                        <Hh3>{a.name}</Hh3>
-                        <Hp>{a.label}</Hp>
-                    </Hf>
-                    )
-                })
-            }
-        </H>
-
-        <AlbomTuri>Uniquely yours</AlbomTuri>
-        <H>
-            {
-                albom?.map((a:any)=>{
-                    return(
-                        <Hf>
-                        <img src={a.images[1].url} width={182} alt="" />
-                        <Hh3>{a.name}</Hh3>
-                        <Hp>{a.label}</Hp>
-                    </Hf>
-                    )
-                })
-            }
-        </H>
 
         
 

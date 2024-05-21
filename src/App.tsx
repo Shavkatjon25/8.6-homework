@@ -2,16 +2,21 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Good from "./Saxifa1/Good"
 import Home from "./Home"
 import UserActive from "./UserActive"
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useEffect} from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Omborchi from "./Omborchi"
 import styled from "styled-components"
+import Qoshiqlar from "./Sahifa2/Qoshiqlar"
 
 
 const router=createBrowserRouter([
   {
     path:'/',
     element:<Good/>
+  },
+  {
+    path:'/plays/:id',
+    element:<Qoshiqlar/>
   }
 ])
 
@@ -21,11 +26,53 @@ const Ota=styled.div`
   padding:0;
 `
 
+const Ab=styled.div`
+  max-width:1728px;
+  width:100%;
+  height: 112px;
+  background: rgba(24, 24, 24, 1);
+  position:fixed;
+  bottom:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0px 48px;
+`
+const Nms=styled.div`
+  display:flex;
+  flex-direction:column;
+`
+const Mnom=styled.h3`
+  font-family: Circular Std;
+font-size: 18px;
+font-weight: 450;
+line-height: 22.77px;
+text-align: left;
+color:#fff;
+`
+const Artist=styled.p`
+  font-family: Circular Std;
+font-size: 16px;
+font-weight: 450;
+line-height: 20.24px;
+letter-spacing: -0.05em;
+text-align: left;
+color:rgba(179, 179, 179, 1);
+`
+
+
 
 
 
 function App() {
 const dispach=useDispatch();
+const D=useSelector((a:any)=>a.musiqaUrl);
+
+
+
+
+
+
 
   async function Token(){
     const date=new Date;
@@ -61,12 +108,23 @@ const dispach=useDispatch();
     
   }, [])
 
+ 
 
   return (
     <Ota>
       <Home/>
       <RouterProvider router={router}></RouterProvider>
       <UserActive/>
+      <Ab>
+        <Nms>
+          <Mnom>Play</Mnom>
+          <Artist>Juilya</Artist>
+        </Nms>
+        <audio src={D} controls autoPlay>
+          
+            </audio>
+          <div></div>
+      </Ab>
     </Ota>
   )
 }
